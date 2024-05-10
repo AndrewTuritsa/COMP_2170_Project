@@ -1,3 +1,7 @@
+
+
+
+
 let board;
 let boardWidth = 1000;
 let boardHeight = 600;
@@ -133,3 +137,4 @@ function restartGame() {
 	obstacleArray = [];
 	gameOver = false;
 }
+
