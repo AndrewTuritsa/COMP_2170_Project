@@ -1,3 +1,4 @@
+let board;
 let boardWidth = 1000;
 let boardHeight = 600;
 let context;
@@ -5,18 +6,17 @@ let context;
 let crabWidth = 90;
 let crabHeight = 150;
 let crabX = 50;
-let crabY = boardHeight-crabHeight;
+let crabY = boardHeight - crabHeight;
 // let crabImg;
 
 let crab = {
-    x : crabX,
-    y: crabY,
-    width : crabWidth,
-    height : crabHeight
+	x: crabX,
+	y: crabY,
+	width: crabWidth,
+	height: crabHeight,
 }
 
 //obstacle - plastic, bottles, etc
-
 let obstacleArray = [];
 
 let obstacle1Width = 130;
@@ -34,81 +34,102 @@ let obstacleY = boardHeight - obstacleHeight;
 //physics/speed
 let velocityX = -10;
 let velocityY = 0;
-let gravity = .4;
+let gravity = 0.4;
 
-let score = 0;
+let gameOver = false;
 
-window.onload = function() {
-    board = document.getElementById("board");
-    board.height = boardHeight;
-    board.width = boardWidth;
+window.onload = function () {
+	board = document.getElementById('board');
+	board.height = boardHeight;
+	board.width = boardWidth;
 
-    context = board.getContext("2d");
+	context = board.getContext('2d');
 
+  //crabimage
+  // crabImg = new Image();
+  // crabImg.src = "./img/...";
+  // crabImg.onload = function() {
+  //     context.drawImage(crabImg,crab.x, crab.y, crab.width, crab.height);
+  // }
+  // obstacle1Img = new Image();
+  // obstacle1Img.src = "./img/obstacle1.src";
 
-    //crabbox
-    context.fillStyle ="red";
-    context.fillRect(crab.x, crab.y, crab.width, crab.height)
-    
-    //crabimage
-    // crabImg = new Image();
-    // crabImg.src = "./img/...";
-    // crabImg.onload = function() {
-    //     context.drawImage(crabImg,crab.x, crab.y, crab.width, crab.height);
-    // }
-    // obstacle1Img = new Image();
-    // obstacle1Img.src = "./img/obstacle1.src";
+  // obstacle2Img = new Image();
+  // obstacle2Img.src = "./img/obstacle2.src";
 
-    // obstacle2Img = new Image();
-    // obstacle2Img.src = "./img/obstacle2.src";
+  // obstacle3Img = new Image();
+  // obstacle3Img.src = "./img/obstacle3.src";
 
-    // obstacle3Img = new Image();
-    // obstacle3Img.src = "./img/obstacle3.src";
-    
-    requestAnimationFrame(update);
-    setInterval(placeObstacle, 1000);
+	requestAnimationFrame(update);
+	setInterval(placeObstacle, 1000);
 }
 
 function update() {
-    requestAnimationFrame(update);
+	requestAnimationFrame(update);
 
-    //context.drawImage(crabImg,crab.x, crab.y, crab.width, crab.height);
-    context.clearRect(0, 0, board.width, board.height)
-    context.fillStyle ="red";
-    context.fillRect(crab.x, crab.y, crab.width, crab.height)
-    
-    for (let i = 0; i < obstacleArray.length; i++) {
-        let obstacle = obstacleArray[i];
-        obstacle.x += velocityX;
-        context.fillStyle ="white";
-        context.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height)
-    }
+  //context.drawImage(crabImg,crab.x, crab.y, crab.width, crab.height);
+	context.clearRect(0, 0, board.width, board.height);
+
+  //crabbox
+	context.fillStyle = 'red';
+	context.fillRect(crab.x, crab.y, crab.width, crab.height);
+
+	for (let i = 0; i < obstacleArray.length; i++) {
+		let obstacle = obstacleArray[i];
+		obstacle.x += velocityX;
+		context.fillStyle = 'white';
+		context.fillRect(
+			obstacle.x,
+			obstacle.y,
+			obstacle.width,
+			obstacle.height
+		)
+
+		if (handleCollision(crab, obstacle)) {
+			gameOver = true;
+			alert('Game Over! Try Again');
+			restartGame();
+			return;
+		}
+	}
 }
 
 function placeObstacle() {
-    
-    //place obstacle
-    let obstacle = {
-        x : obstacleX,
-        y : obstacleY,
-        width : null,
-        height : obstacleHeight
-    }
 
-    let placeObstacleChance = Math.random();
+  //place obstacle
+	let obstacle = {
+		x: obstacleX,
+		y: obstacleY,
+		width: null,
+		height: obstacleHeight,
+	}
 
-    if (placeObstacleChance > 0.9) {
-        obstacle.width = obstacle3Width;
-        obstacleArray.push(obstacle);
-    }
+	let placeObstacleChance = Math.random();
 
-    else if (placeObstacleChance > 0.7) {
-        obstacle.width = obstacle2Width;
-        obstacleArray.push(obstacle);
-    }
-    else if (placeObstacleChance > 0.5) {
-        obstacle.width = obstacle1Width;
-        obstacleArray.push(obstacle);
-    }
+	if (placeObstacleChance > 0.9) {
+		obstacle.width = obstacle3Width;
+		obstacleArray.push(obstacle);
+	} else if (placeObstacleChance > 0.7) {
+		obstacle.width = obstacle2Width;
+		obstacleArray.push(obstacle);
+	} else if (placeObstacleChance > 0.5) {
+		obstacle.width = obstacle1Width;
+		obstacleArray.push(obstacle);
+	}
+}
 
+function handleCollision(crab, obstacle) {
+	return (
+		crab.x < obstacle.x + obstacle.width &&
+		crab.x + crab.width > obstacle.x &&
+		crab.y < obstacle.y + obstacle.height &&
+		crab.y + crab.height > obstacle.y
+	)
+}
+
+function restartGame() {
+	crab.x = crabX;
+	crab.y = crabY;
+	obstacleArray = [];
+	gameOver = false;
 }
