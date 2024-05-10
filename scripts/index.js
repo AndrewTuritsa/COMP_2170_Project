@@ -137,3 +137,31 @@ function restartGame() {
 	obstacleArray = [];
 	gameOver = false;
 }
+
+
+document.addEventListener("keydown", function(event) {
+    if (event.key === "z") {
+        moveToBottom();
+    }
+    if (event.key === "x") {
+        movetoMiddle();
+    }
+    if (event.key === "c") {
+        moveToTop();
+    }
+});
+
+function moveToBottom() {
+    crabHeight = 150;
+    console.log("Moved to bottom lane");
+}
+
+function movetoMiddle() {
+    crabHeight = 300;
+    console.log("Moved to middle lane");
+}
+
+function moveToTop() {
+    crabHeight = 450;
+    console.log("Moved to top lane");
+}
