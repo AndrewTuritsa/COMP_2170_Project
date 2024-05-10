@@ -11,4 +11,6 @@
 
 ## How to run the application locally
 ```
+1. Download the folder or git clone the repo to your choice of destination
+2. Open the folder and open the HTML file to play the game
 ```
