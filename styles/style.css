@@ -1,0 +1,9 @@
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    text-align: center;
+}
+
+#board {
+    background-color: rgb(145, 228, 248);
+    border: 2px solid darkblue;
+}
