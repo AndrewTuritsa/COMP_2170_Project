@@ -1,3 +1,5 @@
+import Score from './score.js';
+
 let board;
 let boardWidth = 1000;
 let boardHeight = 600;
@@ -34,6 +36,7 @@ let gravity = 0.4;
 
 let gameOver = false;
 
+let score;
 window.onload = function () {
 	board = document.getElementById('board');
 	board.height = boardHeight;
@@ -41,6 +44,7 @@ window.onload = function () {
 
 	context = board.getContext('2d');
 
+	score = new Score(context, 1);
   //crabimage
   // crabImg = new Image();
   // crabImg.src = "./img/...";
@@ -77,10 +81,13 @@ window.onload = function () {
 
 function update() {
 	if (gameOver) {
+		score.setHighScore();
 		return;
 	}
   //context.drawImage(crabImg,crab.x, crab.y, crab.width, crab.height);
 	context.clearRect(0, 0, board.width, board.height);
+	score.update(1);
+	score.draw();
 
   //crabbox
 	context.fillStyle = 'red';
@@ -99,6 +106,7 @@ function update() {
 
 		if (handleCollision(crab, obstacle)) {
 			gameOver = true;
+			score.setHighScore();
 			showGameOverScreen();
 			return;
 		}
@@ -148,6 +156,7 @@ function startGame() {
 	crab.y = crabY;
 	obstacleArray = [];
 	gameOver = false;
+	score.reset(); 
 	document.getElementById('gameOverScreen').style.display = 'none';
 	requestAnimationFrame(update);
 }
