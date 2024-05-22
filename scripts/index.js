@@ -1,7 +1,3 @@
-
-
-
-
 let board;
 let boardWidth = 1000;
 let boardHeight = 600;
@@ -10,7 +6,7 @@ let context;
 let crabWidth = 90;
 let crabHeight = 150;
 let crabX = 50;
-let crabY = boardHeight - crabHeight;
+let crabY = boardHeight / 2 - crabHeight / 2;
 // let crabImg;
 
 let crab = {
@@ -22,14 +18,11 @@ let crab = {
 
 //obstacle - plastic, bottles, etc
 let obstacleArray = [];
-
 let obstacle1Width = 130;
 let obstacle2Width = 150;
 let obstacle3Width = 160;
-
 let obstacleHeight = 90;
-let obstacleX = 700;
-let obstacleY = boardHeight - obstacleHeight;
+let laneHeights = [boardHeight / 6, boardHeight / 2, 5 * boardHeight / 6];
 
 // let obstacle1Img;
 // let obstacle2Img;
@@ -37,7 +30,6 @@ let obstacleY = boardHeight - obstacleHeight;
 
 //physics/speed
 let velocityX = -10;
-let velocityY = 0;
 let gravity = 0.4;
 
 let gameOver = false;
@@ -66,11 +58,27 @@ window.onload = function () {
 
 	requestAnimationFrame(update);
 	setInterval(placeObstacle, 1000);
+
+	document.addEventListener("keydown", function (event) {
+		if (!gameOver) {
+		    if (event.key === "z") {
+			moveToBottom();
+		    }
+		    if (event.key === "x") {
+			moveToMiddle();
+		    }
+		    if (event.key === "c") {
+			moveToTop();
+		    }
+		}
+	});
+	document.getElementById('restartButton').addEventListener('click', startGame);
 }
 
 function update() {
-	requestAnimationFrame(update);
-
+	if (gameOver) {
+		return;
+	}
   //context.drawImage(crabImg,crab.x, crab.y, crab.width, crab.height);
 	context.clearRect(0, 0, board.width, board.height);
 
@@ -91,77 +99,67 @@ function update() {
 
 		if (handleCollision(crab, obstacle)) {
 			gameOver = true;
-			alert('Game Over! Try Again');
-			restartGame();
+			showGameOverScreen();
 			return;
 		}
 	}
+	requestAnimationFrame(update);
 }
 
 function placeObstacle() {
-
-  //place obstacle
+	let laneIndex = Math.floor(Math.random() * 3);
+	let obstacleWidth;
+	switch (laneIndex) {
+	    case 0:
+		obstacleWidth = obstacle1Width;
+		break;
+	    case 1:
+		obstacleWidth = obstacle2Width;
+		break;
+	    case 2:
+		obstacleWidth = obstacle3Width;
+		break;
+	}
+    
+  	//place obstacle
 	let obstacle = {
-		x: obstacleX,
-		y: obstacleY,
-		width: null,
+		x: boardWidth,
+		y: laneHeights[laneIndex] - obstacleHeight / 2,
+		width: obstacleWidth,
 		height: obstacleHeight,
 	}
-
-	let placeObstacleChance = Math.random();
-
-	if (placeObstacleChance > 0.9) {
-		obstacle.width = obstacle3Width;
-		obstacleArray.push(obstacle);
-	} else if (placeObstacleChance > 0.7) {
-		obstacle.width = obstacle2Width;
-		obstacleArray.push(obstacle);
-	} else if (placeObstacleChance > 0.5) {
-		obstacle.width = obstacle1Width;
-		obstacleArray.push(obstacle);
-	}
+	obstacleArray.push(obstacle);
 }
 
 function handleCollision(crab, obstacle) {
 	return (
-		crab.x < obstacle.x + obstacle.width &&
-		crab.x + crab.width > obstacle.x &&
-		crab.y < obstacle.y + obstacle.height &&
-		crab.y + crab.height > obstacle.y
+	    crab.x < obstacle.x + obstacle.width &&
+	    crab.x + crab.width > obstacle.x &&
+	    crab.y < obstacle.y + obstacle.height &&
+	    crab.y + crab.height > obstacle.y
 	)
 }
 
-function restartGame() {
-	crab.x = crabX;
+function showGameOverScreen() {
+	document.getElementById('gameOverScreen').style.display = 'block';
+}
+
+function startGame() {
 	crab.y = crabY;
 	obstacleArray = [];
 	gameOver = false;
+	document.getElementById('gameOverScreen').style.display = 'none';
+	requestAnimationFrame(update);
 }
-
-
-document.addEventListener("keydown", function(event) {
-    if (event.key === "z") {
-        moveToBottom();
-    }
-    if (event.key === "x") {
-        movetoMiddle();
-    }
-    if (event.key === "c") {
-        moveToTop();
-    }
-});
 
 function moveToBottom() {
-    crabHeight = 150;
-    console.log("Moved to bottom lane");
+	crab.y = laneHeights[0] - crabHeight / 2;
 }
-
-function movetoMiddle() {
-    crabHeight = 300;
-    console.log("Moved to middle lane");
+    
+    function moveToMiddle() {
+	crab.y = laneHeights[1] - crabHeight / 2;
 }
-
-function moveToTop() {
-    crabHeight = 450;
-    console.log("Moved to top lane");
+    
+    function moveToTop() {
+	crab.y = laneHeights[2] - crabHeight / 2;
 }

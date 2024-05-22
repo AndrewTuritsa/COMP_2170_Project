@@ -1,9 +1,37 @@
 body {
-    font-family: Helvetica, Arial, sans-serif;
-    text-align: center;
+	font-family: Helvetica, Arial, sans-serif;
+	text-align: center;
 }
 
 #board {
-    background-color: rgb(145, 228, 248);
-    border: 2px solid darkblue;
+	background-color: rgb(145, 228, 248);
+	border: 2px solid black;
+}
+
+#gameOverScreen {
+	display: none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding: 20px;
+}
+
+#restartButton {
+    position: absolute;
+    top: 80%;
+	left: 25%;
+	padding: 12px 24px;
+	background-color: white;
+	border-radius: 7px;
+	border: none;
+}
+
+#restartButton:hover {
+	transform: scale(1.1);
+	border: 1px solid black;
+}
+
+#restartButton:active {
+	transform: scale(0.9);
 }
