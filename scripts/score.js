@@ -60,7 +60,8 @@ export default class Score {
         document.body.appendChild(button);
 
         button.addEventListener("click", () => {
-            alert("Button clicked!");
+            // alert("Button clicked!");
+            window.location.href = "level02.html";
         });
     }
 
