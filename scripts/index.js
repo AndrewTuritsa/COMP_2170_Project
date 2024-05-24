@@ -179,3 +179,22 @@ function moveToBottom() {
     function moveToTop() {
 	crab.y = laneHeights[2] - crabHeight / 2;
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+	const playButton = document.getElementById('playButton');
+	const musicLinkInput = document.getElementById('musicLink');
+	const backgroundMusic = document.getElementById('backgroundMusic');
+    
+	playButton.addEventListener('click', function () {
+	    const musicLink = musicLinkInput.value.trim();
+    
+	    if (musicLink) {
+		backgroundMusic.src = musicLink;
+		backgroundMusic.play().catch(error => {
+		    console.error("Error playing music: ", error);
+		});
+	    } else {
+		alert('https://music.youtube.com/watch?v=CVFkvTKfcqk&si=8WggMe0OCNym4aIE');
+	    }
+	});
+});
