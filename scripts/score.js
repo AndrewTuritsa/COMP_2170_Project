@@ -14,7 +14,14 @@ export default class Score {
         this.score += frameTimeDelta * 0.01;
 
 
-        if (Math.floor(this.score) >= 25 && !this.buttonCreated) {
+//new stuff
+        const currentPage = window.location.pathname.split("/").pop();
+        if (currentPage === "index.html") {
+            return;  // Skip button creation if on index.html
+        }
+//new stuff
+
+        if (Math.floor(this.score) >= 5 && !this.buttonCreated) {
             this.createButton();
             this.buttonCreated = true;
         }
@@ -22,7 +29,7 @@ export default class Score {
 
     reset() {
         this.score = 0;
-        this.buttonCreated = false;  // Reset the button creation flag
+        this.buttonCreated = false;  
     }
 
     setHighScore() {
@@ -60,8 +67,16 @@ export default class Score {
         document.body.appendChild(button);
 
         button.addEventListener("click", () => {
-            // alert("Button clicked!");
-            window.location.href = "level02.html";
+            const currentPage = window.location.pathname.split("/").pop();
+            if (currentPage === "level01.html") {
+                window.location.href = "level02.html";
+            } else if (currentPage === "level02.html") {
+                window.location.href = "level03.html";
+            } else if (currentPage === "level03.html") {
+                window.location.href = "winScreen.html";
+            } else {
+                alert("Button clicked, but no redirection rule is set for this page.");
+            }
         });
     }
 
