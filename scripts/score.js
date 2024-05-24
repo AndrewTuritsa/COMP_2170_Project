@@ -1,6 +1,8 @@
 export default class Score {
     score = 0;
     HIGH_SCORE_KEY = "highScore";
+    buttonCreated = false;  
+
 
     constructor(ctx, scaleRatio) {
         this.ctx = ctx;
@@ -10,10 +12,17 @@ export default class Score {
 
     update(frameTimeDelta) {
         this.score += frameTimeDelta * 0.01;
+
+
+        if (Math.floor(this.score) >= 25 && !this.buttonCreated) {
+            this.createButton();
+            this.buttonCreated = true;
+        }
     }
 
     reset() {
         this.score = 0;
+        this.buttonCreated = false;  // Reset the button creation flag
     }
 
     setHighScore() {
@@ -37,4 +46,22 @@ export default class Score {
         const highScorePadded = Math.floor(highScore).toString().padStart(6, 0);
         this.ctx.fillText(`HI ${highScorePadded}`, highScoreX, y);
     }
+
+    createButton() {
+        const button = document.createElement("button");
+        button.innerText = "Next Level";
+        button.style.position = "absolute";
+        button.style.top = "50%";
+        button.style.left = "50%";
+        button.style.transform = "translate(-50%, -50%)";
+        button.style.padding = "10px 20px";
+        button.style.fontSize = "16px";
+
+        document.body.appendChild(button);
+
+        button.addEventListener("click", () => {
+            alert("Button clicked!");
+        });
+    }
+
 }
