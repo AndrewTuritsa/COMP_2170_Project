@@ -31,20 +31,19 @@ let laneHeights = [boardHeight / 6, boardHeight / 2, 5 * boardHeight / 6];
 // let obstacle3Img;
 
 //physics/speed
-let velocityX = -10;
-let gravity = 0.4;
-
+let velocityX = -7;
 let gameOver = false;
 
 let score;
+
 window.onload = function () {
 	board = document.getElementById('board');
 	board.height = boardHeight;
 	board.width = boardWidth;
 
 	context = board.getContext('2d');
-
 	score = new Score(context, 1);
+
   //crabimage
   // crabImg = new Image();
   // crabImg.src = "./img/...";
@@ -59,10 +58,9 @@ window.onload = function () {
 
   // obstacle3Img = new Image();
   // obstacle3Img.src = "./img/obstacle3.src";
-
+  	
 	requestAnimationFrame(update);
 	setInterval(placeObstacle, 1000);
-
 	document.addEventListener("keydown", function (event) {
 		if (!gameOver) {
 		    if (event.key === "z") {
@@ -92,6 +90,10 @@ function update() {
   //crabbox
 	context.fillStyle = 'red';
 	context.fillRect(crab.x, crab.y, crab.width, crab.height);
+	context.font = "50px serif";
+	context.fillText("Z",crabX, laneHeights[0]);
+	context.fillText("X",crabX, laneHeights[1]);
+	context.fillText("C",crabX, laneHeights[2]);
 
 	for (let i = 0; i < obstacleArray.length; i++) {
 		let obstacle = obstacleArray[i];
@@ -128,7 +130,10 @@ function placeObstacle() {
 		obstacleWidth = obstacle3Width;
 		break;
 	}
-    
+	//Change velocity 
+	if (velocityX >= -20){
+	velocityX -= 0.1
+	}
   	//place obstacle
 	let obstacle = {
 		x: boardWidth,
@@ -136,6 +141,7 @@ function placeObstacle() {
 		width: obstacleWidth,
 		height: obstacleHeight,
 	}
+
 	obstacleArray.push(obstacle);
 }
 
@@ -155,6 +161,7 @@ function showGameOverScreen() {
 function startGame() {
 	crab.y = crabY;
 	obstacleArray = [];
+	velocityX = -7;
 	gameOver = false;
 	score.reset(); 
 	document.getElementById('gameOverScreen').style.display = 'none';
