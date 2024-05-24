@@ -74,7 +74,7 @@ window.onload = function () {
 		    }
 		}
 	});
-	document.getElementById('restartButton').addEventListener('click', startGame);
+	document.getElementById('button').addEventListener('click', startGame);
 }
 
 function update() {
