@@ -14,12 +14,10 @@ export default class Score {
         this.score += frameTimeDelta * 0.01;
 
 
-//new stuff
         const currentPage = window.location.pathname.split("/").pop();
         if (currentPage === "index.html") {
-            return;  // Skip button creation if on index.html
+            return;
         }
-//new stuff
 
         if (Math.floor(this.score) >= 5 && !this.buttonCreated) {
             this.createButton();
