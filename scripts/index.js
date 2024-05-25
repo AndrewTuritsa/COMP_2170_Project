@@ -5,181 +5,170 @@ let boardWidth = 1000;
 let boardHeight = 600;
 let context;
 
-let crabWidth = 90;
-let crabHeight = 150;
-let crabX = 50;
+let crabWidth = 140;
+let crabHeight = 120;
+let crabX = 85;
 let crabY = boardHeight / 2 - crabHeight / 2;
-// let crabImg;
+
+let crabImg = new Image();
+crabImg.src = "images/theRunningCrab.svg";
+
+let obstacle1Img = new Image();
+obstacle1Img.src = "images/brokenBottle.svg";
+
+let obstacle2Img = new Image();
+obstacle2Img.src = "images/fishingHook.svg";
+
+let obstacle3Img = new Image();
+obstacle3Img.src = "images/rockObstacle.svg";
 
 let crab = {
-	x: crabX,
-	y: crabY,
-	width: crabWidth,
-	height: crabHeight,
-}
+    x: crabX,
+    y: crabY,
+    width: crabWidth,
+    height: crabHeight,
+};
 
-//obstacle - plastic, bottles, etc
+// Obstacles are broken bottle, fishing hook, and rocks
 let obstacleArray = [];
-let obstacle1Width = 130;
-let obstacle2Width = 150;
-let obstacle3Width = 160;
+let obstacleTypes = [
+    { img: obstacle1Img, width: 90 },
+    { img: obstacle2Img, width: 100 },
+    { img: obstacle3Img, width: 100 }
+];
 let obstacleHeight = 90;
 let laneHeights = [boardHeight / 6, boardHeight / 2, 5 * boardHeight / 6];
 
-// let obstacle1Img;
-// let obstacle2Img;
-// let obstacle3Img;
-
-//physics/speed
+// Physics/speed
 let velocityX = -7;
 let gameOver = false;
 
 let score;
+const currentPage = window.location.pathname.split("/").pop();
 
 window.onload = function () {
-	board = document.getElementById('board');
-	board.height = boardHeight;
-	board.width = boardWidth;
+    board = document.getElementById('board');
+    board.height = boardHeight;
+    board.width = boardWidth;
 
-	context = board.getContext('2d');
-	score = new Score(context, 1);
+    context = board.getContext('2d');
+    score = new Score(context, 1);
 
-  //crabimage
-  // crabImg = new Image();
-  // crabImg.src = "./img/...";
-  // crabImg.onload = function() {
-  //     context.drawImage(crabImg,crab.x, crab.y, crab.width, crab.height);
-  // }
-  // obstacle1Img = new Image();
-  // obstacle1Img.src = "./img/obstacle1.src";
-
-  // obstacle2Img = new Image();
-  // obstacle2Img.src = "./img/obstacle2.src";
-
-  // obstacle3Img = new Image();
-  // obstacle3Img.src = "./img/obstacle3.src";
-  	
-	requestAnimationFrame(update);
-	setInterval(placeObstacle, 1000);
-	document.addEventListener("keydown", function (event) {
-		if (!gameOver) {
-		    if (event.key === "z") {
-			moveToBottom();
-		    }
-		    if (event.key === "x") {
-			moveToMiddle();
-		    }
-		    if (event.key === "c") {
-			moveToTop();
-		    }
-		}
-	});
-	document.getElementById('button').addEventListener('click', startGame);
-}
+    requestAnimationFrame(update);
+    setInterval(placeObstacle, 1000);
+    document.addEventListener("keydown", function (event) {
+        if (!gameOver) {
+            if (event.key === "z") {
+                moveToBottom();
+            }
+            if (event.key === "x") {
+                moveToMiddle();
+            }
+            if (event.key === "c") {
+                moveToTop();
+            }
+        }
+    });
+    document.getElementById('button').addEventListener('click', startGame);
+};
 
 function update() {
-	if (gameOver) {
-		score.setHighScore();
-		return;
-	}
-  //context.drawImage(crabImg,crab.x, crab.y, crab.width, crab.height);
-	context.clearRect(0, 0, board.width, board.height);
-	score.update(1);
-	score.draw();
+    if (gameOver) {
+        score.setHighScore();
+        return;
+    }
+    context.clearRect(0, 0, board.width, board.height);
+    score.update(1);
+    score.draw();
 
-  //crabbox
-	context.fillStyle = 'red';
-	context.fillRect(crab.x, crab.y, crab.width, crab.height);
-	context.font = "50px serif";
-	context.fillText("Z",crabX, laneHeights[0]);
-	context.fillText("X",crabX, laneHeights[1]);
-	context.fillText("C",crabX, laneHeights[2]);
+    // Crabbox
+    context.fillStyle = 'red';
+    context.drawImage(crabImg, crab.x, crab.y, crab.width, crab.height);
+    context.font = "50px serif";
+    context.fillText("Z", 40, laneHeights[0]);
+    context.fillText("X", 40, laneHeights[1]);
+    context.fillText("C", 40, laneHeights[2]);
 
-	for (let i = 0; i < obstacleArray.length; i++) {
-		let obstacle = obstacleArray[i];
-		obstacle.x += velocityX;
-		context.fillStyle = 'white';
-		context.fillRect(
-			obstacle.x,
-			obstacle.y,
-			obstacle.width,
-			obstacle.height
-		)
+    for (let i = 0; i < obstacleArray.length; i++) {
+        let obstacle = obstacleArray[i];
+        obstacle.x += velocityX;
 
-		if (handleCollision(crab, obstacle)) {
-			gameOver = true;
-			score.setHighScore();
-			showGameOverScreen();
-			return;
-		}
-	}
-	requestAnimationFrame(update);
+        context.drawImage(obstacle.img, obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+
+        if (handleCollision(crab, obstacle)) {
+            gameOver = true;
+            score.setHighScore();
+            showGameOverScreen();
+            return;
+        }
+    }
+    requestAnimationFrame(update);
 }
 
 function placeObstacle() {
-	let laneIndex = Math.floor(Math.random() * 3);
-	let obstacleWidth;
-	switch (laneIndex) {
-	    case 0:
-		obstacleWidth = obstacle1Width;
-		break;
-	    case 1:
-		obstacleWidth = obstacle2Width;
-		break;
-	    case 2:
-		obstacleWidth = obstacle3Width;
-		break;
-	}
-	//Change velocity 
-	if (velocityX >= -20){
-	velocityX -= 0.1
-	}
-  	//place obstacle
-	let obstacle = {
-		x: boardWidth,
-		y: laneHeights[laneIndex] - obstacleHeight / 2,
-		width: obstacleWidth,
-		height: obstacleHeight,
-	}
+    let laneIndex = Math.floor(Math.random() * 3);
+    let obstacleTypeIndex = Math.floor(Math.random() * obstacleTypes.length);
+    let obstacleType = obstacleTypes[obstacleTypeIndex];
 
-	obstacleArray.push(obstacle);
+    // Change velocity 
+    if (velocityX >= -20) {
+        if (currentPage === "level01.html") {
+            velocityX = -7;
+        } else if (currentPage === "level02.html") {
+            velocityX = -10;
+        } else if (currentPage === "level03.html") {
+            velocityX = -15;
+        }
+    }
+
+    // Place obstacle
+    let obstacle = {
+        x: boardWidth,
+        y: laneHeights[laneIndex] - obstacleHeight / 2,
+        width: obstacleType.width,
+        height: obstacleHeight,
+        img: obstacleType.img
+    };
+
+    obstacleArray.push(obstacle);
 }
 
 function handleCollision(crab, obstacle) {
-	return (
-	    crab.x < obstacle.x + obstacle.width &&
-	    crab.x + crab.width > obstacle.x &&
-	    crab.y < obstacle.y + obstacle.height &&
-	    crab.y + crab.height > obstacle.y
-	)
+    return (
+        crab.x < obstacle.x + obstacle.width &&
+        crab.x + crab.width > obstacle.x &&
+        crab.y < obstacle.y + obstacle.height &&
+        crab.y + crab.height > obstacle.y
+    );
 }
 
 function showGameOverScreen() {
-	document.getElementById('gameOverScreen').style.display = 'block';
+    document.getElementById('gameOverScreen').style.display = 'block';
 }
 
 function startGame() {
-	crab.y = crabY;
-	obstacleArray = [];
-	velocityX = -7;
-	gameOver = false;
-	score.reset(); 
-	document.getElementById('gameOverScreen').style.display = 'none';
-	requestAnimationFrame(update);
+    crab.y = crabY;
+    obstacleArray = [];
+    velocityX = -7;
+    gameOver = false;
+    score.reset(); 
+    document.getElementById('gameOverScreen').style.display = 'none';
+    requestAnimationFrame(update);
 }
 
 function moveToBottom() {
-	crab.y = laneHeights[0] - crabHeight / 2;
-}
-    
-    function moveToMiddle() {
-	crab.y = laneHeights[1] - crabHeight / 2;
-}
-    
-    function moveToTop() {
-	crab.y = laneHeights[2] - crabHeight / 2;
+    crab.y = laneHeights[0] - crabHeight / 2;
 }
 
+function moveToMiddle() {
+    crab.y = laneHeights[1] - crabHeight / 2;
+}
+
+function moveToTop() {
+    crab.y = laneHeights[2] - crabHeight / 2;
+}
+
+// Background music
 let playButton = document.getElementById("play");
 let audio = new Audio("music/background-music.mp3");
 audio.loop = true; 
@@ -200,4 +189,4 @@ playButton.addEventListener("click", toggleMusic);
 window.addEventListener("load", function () {
     audio.play();
     playButton.textContent = "Mute";
-}); 
+});
