@@ -7,7 +7,7 @@ let context;
 
 let crabWidth = 140;
 let crabHeight = 120;
-let crabX = 50;
+let crabX = 85;
 let crabY = boardHeight / 2 - crabHeight / 2;
 
 let crabImg = new Image();
@@ -85,9 +85,9 @@ function update() {
     context.fillStyle = 'red';
     context.drawImage(crabImg, crab.x, crab.y, crab.width, crab.height);
     context.font = "50px serif";
-    context.fillText("Z", crabX, laneHeights[0]);
-    context.fillText("X", crabX, laneHeights[1]);
-    context.fillText("C", crabX, laneHeights[2]);
+    context.fillText("Z", 40, laneHeights[0]);
+    context.fillText("X", 40, laneHeights[1]);
+    context.fillText("C", 40, laneHeights[2]);
 
     for (let i = 0; i < obstacleArray.length; i++) {
         let obstacle = obstacleArray[i];
