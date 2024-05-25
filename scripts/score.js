@@ -3,7 +3,6 @@ export default class Score {
     HIGH_SCORE_KEY = "highScore";
     buttonCreated = false;  
 
-
     constructor(ctx, scaleRatio) {
         this.ctx = ctx;
         this.canvas = ctx.canvas;
@@ -12,7 +11,6 @@ export default class Score {
 
     update(frameTimeDelta) {
         this.score += frameTimeDelta * 0.01;
-
 
         const currentPage = window.location.pathname.split("/").pop();
         if (currentPage === "index.html") {

@@ -133,19 +133,20 @@ function placeObstacle() {
 		obstacleWidth = obstacle3Width;
 		break;
 	}
+
 	//Change velocity 
 	if (velocityX >= -20){
 		if (currentPage === "level01.html") {
-			// window.location.href = "level02.html";
-			velocityX = -7
+			velocityX = -7;
 		} else if (currentPage === "level02.html") {
-			// window.location.href = "level03.html";
-			velocityX = -10
+			velocityX = -10;
 		} else if (currentPage === "level03.html") {
-			// window.location.href = "winScreen.html";
-			velocityX = -15
-		}
+			velocityX = -15;
+		} else if (currentPage === "index.html") {
+			velocityX -= 0.15;
+		} 
 	}
+
   	//place obstacle
 	let obstacle = {
 		x: boardWidth,
