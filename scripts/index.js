@@ -118,7 +118,9 @@ function placeObstacle() {
             velocityX = -10;
         } else if (currentPage === "level03.html") {
             velocityX = -15;
-        }
+        } else if (currentPage === "index.html") {
+			velocityX -= 0.15;
+		} 
     }
 
     // Place obstacle
