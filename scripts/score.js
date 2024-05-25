@@ -56,7 +56,7 @@ export default class Score {
         const button = document.createElement("button");
         button.innerText = "Next Level";
         button.style.position = "absolute";
-        button.style.top = "50%";
+        button.style.top = "70%";
         button.style.left = "50%";
         button.style.transform = "translate(-50%, -50%)";
         button.style.padding = "10px 20px";
