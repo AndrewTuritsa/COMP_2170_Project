@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 190.57 360.45">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#radial-gradient-2);
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4 {
+        stroke: #000;
+        stroke-miterlimit: 10;
+        stroke-width: 6px;
+      }
+
+      .cls-5 {
+        fill: url(#radial-gradient);
+        opacity: .51;
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        fill: url(#radial-gradient-5);
+      }
+
+      .cls-3 {
+        fill: url(#radial-gradient-3);
+      }
+
+      .cls-4 {
+        fill: url(#radial-gradient-4);
+      }
+    </style>
+    <radialGradient id="radial-gradient" cx="95.17" cy="179.56" fx="95.17" fy="179.56" r="140.83" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="1" stop-color="#0dad79" stop-opacity=".51"/>
+    </radialGradient>
+    <radialGradient id="radial-gradient-2" cx="95.17" cy="179.56" fx="95.17" fy="179.56" r="140.83" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffda"/>
+      <stop offset="1" stop-color="#0dad79" stop-opacity=".51"/>
+    </radialGradient>
+    <radialGradient id="radial-gradient-3" cx="39.57" cy="27.9" fx="39.57" fy="27.9" r="18.86" xlink:href="#radial-gradient"/>
+    <radialGradient id="radial-gradient-4" cx="42.93" cy="37.72" fx="42.93" fy="37.72" r="18.86" xlink:href="#radial-gradient"/>
+    <radialGradient id="radial-gradient-5" cx="36.89" cy="18.54" fx="36.89" fy="18.54" r="18.86" xlink:href="#radial-gradient"/>
+  </defs>
+  <g id="Layer_2-2" data-name="Layer 2">
+    <g>
+      <path class="cls-5" d="M30.98,326.77L3.01,208.45s-.92-50.45,18.34-72c15.58-17.43-2.74-86.46-10.32-112.23-1.58-5.36,1.6-10.95,7.01-12.35L51.16,3.32c5.46-1.41,10.98,2.01,12.14,7.53,5.41,25.68,20.81,92,37.39,102.68,20.64,13.3,47.69,38.06,56.87,77.96s29.78,124.74,29.78,124.74l-14.64,20.64-43.11-5.5-6.42,18.8-35.31-19.72-15.13,25.68-41.73-29.35Z"/>
+      <g>
+        <path class="cls-1" d="M30.98,326.77L3.01,208.45s-.92-50.45,18.34-72c15.58-17.43-2.74-86.46-10.32-112.23-1.58-5.36,1.6-10.95,7.01-12.35L51.16,3.32c5.46-1.41,10.98,2.01,12.14,7.53,5.41,25.68,20.81,92,37.39,102.68,20.64,13.3,47.69,38.06,56.87,77.96,9.17,39.9,29.78,124.74,29.78,124.74l-14.64,20.64-43.11-5.5-6.42,18.8-35.31-19.72-15.13,25.68-41.73-29.35Z"/>
+        <line class="cls-3" x1="13.56" y1="33.78" x2="65.59" y2="22.02"/>
+        <line class="cls-4" x1="16.92" y1="43.6" x2="68.94" y2="31.84"/>
+        <line class="cls-2" x1="10.87" y1="24.41" x2="62.9" y2="12.66"/>
+      </g>
+    </g>
+  </g>
+</svg>
