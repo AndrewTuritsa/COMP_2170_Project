@@ -35,6 +35,8 @@ let velocityX = -7;
 let gameOver = false;
 
 let score;
+const currentPage = window.location.pathname.split("/").pop();
+
 
 window.onload = function () {
 	board = document.getElementById('board');
@@ -95,6 +97,7 @@ function update() {
 	context.fillText("X",crabX, laneHeights[1]);
 	context.fillText("C",crabX, laneHeights[2]);
 
+
 	for (let i = 0; i < obstacleArray.length; i++) {
 		let obstacle = obstacleArray[i];
 		obstacle.x += velocityX;
@@ -132,7 +135,16 @@ function placeObstacle() {
 	}
 	//Change velocity 
 	if (velocityX >= -20){
-	velocityX -= 0.1
+		if (currentPage === "level01.html") {
+			// window.location.href = "level02.html";
+			velocityX = -7
+		} else if (currentPage === "level02.html") {
+			// window.location.href = "level03.html";
+			velocityX = -10
+		} else if (currentPage === "level03.html") {
+			// window.location.href = "winScreen.html";
+			velocityX = -15
+		}
 	}
   	//place obstacle
 	let obstacle = {

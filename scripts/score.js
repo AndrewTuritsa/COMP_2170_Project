@@ -19,7 +19,7 @@ export default class Score {
             return;
         }
 
-        if (Math.floor(this.score) >= 5 && !this.buttonCreated) {
+        if (Math.floor(this.score) >= 10 && !this.buttonCreated) {
             this.createButton();
             this.buttonCreated = true;
         }
